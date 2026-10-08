@@ -5,6 +5,59 @@
 <title>Conselho Online | Grandes decisões, mais perspectivas</title>
 <meta name="description" content="Uma mesa de sete especialistas para apoiar CEOs e empresários em decisões estratégicas, com método, plano de ação e acompanhamento. Conheça o Conselho Online da Mercado de Empresas.">
 <meta name="theme-color" content="#F6F3EC">
+<!-- Google Analytics 4: shared Mercado de Empresas property. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4617B5CX98"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){ window.dataLayer.push(arguments); }
+gtag('js', new Date());
+gtag('config', 'G-4617B5CX98', {
+  send_page_view: true,
+  content_group: 'Conselho Online'
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  function track(name, parameters) {
+    gtag('event', name, Object.assign({
+      send_to: 'G-4617B5CX98',
+      content_group: 'Conselho Online'
+    }, parameters));
+  }
+
+  document.querySelectorAll('a[href="#conversa"]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      track('cta_contact_click', {
+        cta_text: link.textContent.trim(),
+        position: link.closest('header') ? 'header' : 'hero'
+      });
+    });
+  });
+
+  document.querySelectorAll('.advisor-open').forEach(function (button) {
+    button.addEventListener('click', function () {
+      if (!document.getElementById('advisor-dialog').open) return;
+      track('advisor_profile_view', {
+        advisor_id: button.dataset.advisor,
+        advisor_name: button.querySelector('h3').textContent.trim(),
+        advisor_role: button.querySelector('.portrait-tag').textContent.trim()
+      });
+    });
+  });
+
+  document.querySelectorAll('input[name="topic"]').forEach(function (input) {
+    input.addEventListener('change', function () {
+      if (input.checked) track('contact_topic_select', { interest: input.value });
+    });
+  });
+
+  document.getElementById('contact-whatsapp').addEventListener('click', function () {
+    track('whatsapp_click', {
+      position: 'contact',
+      interest: document.querySelector('input[name="topic"]:checked').value
+    });
+  });
+});
+</script>
 <link rel="icon" href="assets/conselho-online.png" type="image/png">
 <link rel="stylesheet" href="styles.css">
 </head>
